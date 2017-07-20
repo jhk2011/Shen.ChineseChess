@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.15
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shen.ChineseChess", "Shen.ChineseChess\Shen.ChineseChess.csproj", "{89CC7BD4-FE71-4B1C-A3F2-D748895F78A8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shen.ChineseChess.UnitTests", "Shen.ChineseChess.UnitTests\Shen.ChineseChess.UnitTests.csproj", "{541CCAA5-1526-4029-AB92-6319E79AC1C3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shen.ChineseChess.TestConsole", "Shen.ChineseChess.TestConsole\Shen.ChineseChess.TestConsole.csproj", "{11922563-D7FD-4A73-BA3D-E1726554CC77}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shen.ChineseChess.Gui", "Shen.ChineseChess.Gui\Shen.ChineseChess.Gui.csproj", "{110DC234-0C6F-4A7D-B88D-909EF629D7D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shen.ChineseChess.Client", "Shen.ChineseChess.Client\Shen.ChineseChess.Client.csproj", "{F62AC841-DD70-423F-A427-20A9DA1E0E55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shen.ChineseChess.Server", "Shen.ChineseChess.Server\Shen.ChineseChess.Server.csproj", "{56C6D3E3-F20E-40AC-9AFE-9E44A539A9B7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Dao.Net", "E:\用户\Documents\Visual Studio 2017\Projects\Dao.Net\Dao.Net\Dao.Net.csproj", "{EEDAF70C-63D7-4F18-BAF2-8FEF070E34A8}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{89CC7BD4-FE71-4B1C-A3F2-D748895F78A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{89CC7BD4-FE71-4B1C-A3F2-D748895F78A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{89CC7BD4-FE71-4B1C-A3F2-D748895F78A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{89CC7BD4-FE71-4B1C-A3F2-D748895F78A8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{541CCAA5-1526-4029-AB92-6319E79AC1C3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{541CCAA5-1526-4029-AB92-6319E79AC1C3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{541CCAA5-1526-4029-AB92-6319E79AC1C3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{541CCAA5-1526-4029-AB92-6319E79AC1C3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{11922563-D7FD-4A73-BA3D-E1726554CC77}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11922563-D7FD-4A73-BA3D-E1726554CC77}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{11922563-D7FD-4A73-BA3D-E1726554CC77}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11922563-D7FD-4A73-BA3D-E1726554CC77}.Release|Any CPU.Build.0 = Release|Any CPU
+		{110DC234-0C6F-4A7D-B88D-909EF629D7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{110DC234-0C6F-4A7D-B88D-909EF629D7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{110DC234-0C6F-4A7D-B88D-909EF629D7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{110DC234-0C6F-4A7D-B88D-909EF629D7D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F62AC841-DD70-423F-A427-20A9DA1E0E55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F62AC841-DD70-423F-A427-20A9DA1E0E55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F62AC841-DD70-423F-A427-20A9DA1E0E55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F62AC841-DD70-423F-A427-20A9DA1E0E55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56C6D3E3-F20E-40AC-9AFE-9E44A539A9B7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56C6D3E3-F20E-40AC-9AFE-9E44A539A9B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56C6D3E3-F20E-40AC-9AFE-9E44A539A9B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56C6D3E3-F20E-40AC-9AFE-9E44A539A9B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EEDAF70C-63D7-4F18-BAF2-8FEF070E34A8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EEDAF70C-63D7-4F18-BAF2-8FEF070E34A8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EEDAF70C-63D7-4F18-BAF2-8FEF070E34A8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EEDAF70C-63D7-4F18-BAF2-8FEF070E34A8}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(Performance) = preSolution
+		HasPerformanceSessions = true
+	EndGlobalSection
+EndGlobal
