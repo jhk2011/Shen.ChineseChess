@@ -79,12 +79,6 @@ namespace Shen.ChineseChess.Gui {
 
         public Chessboard() {
 
-            foreach (var style in typeof(ControlStyles).GetEnumValues()) {
-                Console.WriteLine("{0}={1}", typeof(ControlStyles)
-                    .GetEnumName(style),
-                    GetStyle((ControlStyles)style));
-            }
-
             SetStyle(ControlStyles.SupportsTransparentBackColor
                   | ControlStyles.UserPaint
                   | ControlStyles.AllPaintingInWmPaint
@@ -163,15 +157,6 @@ namespace Shen.ChineseChess.Gui {
         Image image;
 
         public void DrawChessBoard(Chess board, Graphics g) {
-
-            if (image != null) {
-                bool flag = image== Resource.Board;
-                Console.WriteLine("一致",flag);
-            }
-
-            image = Resource.Board;
-
-
 
             g.DrawImage(Resource.Board, 0, 0, 325, 402);
 

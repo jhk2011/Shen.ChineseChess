@@ -28,17 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.btnReady = new System.Windows.Forms.Button();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.picTurn = new System.Windows.Forms.PictureBox();
+            this.picBlack = new System.Windows.Forms.PictureBox();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.lblBlackName = new System.Windows.Forms.Label();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.lblRed = new System.Windows.Forms.Label();
+            this.picRed = new System.Windows.Forms.PictureBox();
             this.chessboard = new Shen.ChineseChess.Client.Chessboard();
-            ((System.ComponentModel.ISupportInitialize)(this.picTurn)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBlack)).BeginInit();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picRed)).BeginInit();
             this.SuspendLayout();
             // 
             // btnReady
             // 
-            this.btnReady.Location = new System.Drawing.Point(411, 12);
+            this.btnReady.Location = new System.Drawing.Point(267, 410);
             this.btnReady.Name = "btnReady";
             this.btnReady.Size = new System.Drawing.Size(75, 23);
             this.btnReady.TabIndex = 0;
@@ -46,26 +52,72 @@
             this.btnReady.UseVisualStyleBackColor = true;
             this.btnReady.Click += new System.EventHandler(this.btnReady_Click);
             // 
-            // timer1
+            // picBlack
             // 
-            this.timer1.Enabled = true;
-            this.timer1.Interval = 1000;
+            this.picBlack.BackColor = System.Drawing.Color.Transparent;
+            this.picBlack.Image = global::Shen.ChineseChess.Client.Resource.b_j;
+            this.picBlack.Location = new System.Drawing.Point(28, 15);
+            this.picBlack.Name = "picBlack";
+            this.picBlack.Size = new System.Drawing.Size(38, 38);
+            this.picBlack.TabIndex = 2;
+            this.picBlack.TabStop = false;
             // 
-            // picTurn
+            // panel1
             // 
-            this.picTurn.BackColor = System.Drawing.Color.Transparent;
-            this.picTurn.Location = new System.Drawing.Point(411, 66);
-            this.picTurn.Name = "picTurn";
-            this.picTurn.Size = new System.Drawing.Size(75, 68);
-            this.picTurn.TabIndex = 2;
-            this.picTurn.TabStop = false;
+            this.panel1.BackColor = System.Drawing.Color.Transparent;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.lblBlackName);
+            this.panel1.Controls.Add(this.picBlack);
+            this.panel1.Location = new System.Drawing.Point(13, 45);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(108, 100);
+            this.panel1.TabIndex = 4;
+            // 
+            // lblBlackName
+            // 
+            this.lblBlackName.AutoSize = true;
+            this.lblBlackName.Location = new System.Drawing.Point(28, 69);
+            this.lblBlackName.Name = "lblBlackName";
+            this.lblBlackName.Size = new System.Drawing.Size(11, 12);
+            this.lblBlackName.TabIndex = 3;
+            this.lblBlackName.Text = "-";
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.Color.Transparent;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.lblRed);
+            this.panel2.Controls.Add(this.picRed);
+            this.panel2.Location = new System.Drawing.Point(13, 193);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(108, 100);
+            this.panel2.TabIndex = 5;
+            // 
+            // lblRed
+            // 
+            this.lblRed.AutoSize = true;
+            this.lblRed.Location = new System.Drawing.Point(28, 69);
+            this.lblRed.Name = "lblRed";
+            this.lblRed.Size = new System.Drawing.Size(11, 12);
+            this.lblRed.TabIndex = 3;
+            this.lblRed.Text = "-";
+            // 
+            // picRed
+            // 
+            this.picRed.BackColor = System.Drawing.Color.Transparent;
+            this.picRed.Image = global::Shen.ChineseChess.Client.Resource.r_j;
+            this.picRed.Location = new System.Drawing.Point(28, 15);
+            this.picRed.Name = "picRed";
+            this.picRed.Size = new System.Drawing.Size(38, 38);
+            this.picRed.TabIndex = 2;
+            this.picRed.TabStop = false;
             // 
             // chessboard
             // 
             this.chessboard.BackColor = System.Drawing.Color.Transparent;
             this.chessboard.Chess = null;
             this.chessboard.Color = Shen.ChineseChess.ChessmanColor.Red;
-            this.chessboard.Location = new System.Drawing.Point(12, 7);
+            this.chessboard.Location = new System.Drawing.Point(135, 7);
             this.chessboard.Name = "chessboard";
             this.chessboard.Size = new System.Drawing.Size(355, 414);
             this.chessboard.TabIndex = 3;
@@ -77,15 +129,23 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Shen.ChineseChess.Client.Resource.bg;
-            this.ClientSize = new System.Drawing.Size(518, 433);
-            this.Controls.Add(this.chessboard);
-            this.Controls.Add(this.picTurn);
+            this.ClientSize = new System.Drawing.Size(518, 445);
+            this.Controls.Add(this.panel2);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.btnReady);
+            this.Controls.Add(this.chessboard);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainForm";
             this.Text = "MainForm";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.picTurn)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.picBlack)).EndInit();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.picRed)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -93,8 +153,12 @@
         #endregion
 
         private System.Windows.Forms.Button btnReady;
-        private System.Windows.Forms.Timer timer1;
-        private System.Windows.Forms.PictureBox picTurn;
+        private System.Windows.Forms.PictureBox picBlack;
         private Chessboard chessboard;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Label lblBlackName;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Label lblRed;
+        private System.Windows.Forms.PictureBox picRed;
     }
 }

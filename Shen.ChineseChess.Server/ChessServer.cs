@@ -10,8 +10,6 @@ namespace Shen.ChineseChess.Server {
 
         RoomService roomService = new RoomService();
 
-
-
         internal RoomService RoomService
         {
             get

@@ -13,8 +13,6 @@ namespace Shen.ChineseChess.Client {
     public partial class RoomForm : Form {
         ChessClient client = new ChessClient();
 
-
-
         public RoomForm() {
             InitializeComponent();
         }
@@ -24,18 +22,21 @@ namespace Shen.ChineseChess.Client {
 
             Console.WriteLine("Connected");
 
-            client.ChessService.Login("abc");
+            if (string.IsNullOrEmpty(txtName.Text)) {
+                txtName.Text =( Guid.NewGuid() + "n").Substring(0,6);
+            }
+
+            client.ChessService.Login(txtName.Text);
+
             lstRooms.DataSource = client.ChessService.GetRooms();
         }
 
         private void btnEnter_Click(object sender, EventArgs e) {
 
-            int index = lstRooms.SelectedIndex;
-
-           
+            var room = lstRooms.SelectedItem as ChessRoom;
 
             MainForm frm = new MainForm {
-                rid=index,
+                rid = room.Id,
                 client = client
             };
 

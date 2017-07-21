@@ -29,21 +29,6 @@ namespace Shen.ChineseChess.Server {
 
     }
 
-
-    class SessionService {
-
-        ChessServer server;
-        public SessionService(ChessServer server) {
-            this.server = server;
-        }
-
-        public ChessSession Find(string id) {
-            if (!server.Sessions.Contains(id)) return null;
-
-            return server.Sessions[id] as ChessSession;
-        }
-    }
-
     class ChessService : IChessService {
 
         RoomService roomService;
@@ -95,12 +80,26 @@ namespace Shen.ChineseChess.Server {
 
             player.Number = rid;
 
+            room.RoomChanged += () => OnRoomChanged();
             room.ChessBoard.ChessBoardChanged += () => OnChessBoardChanged();
+
+            if (room.Players.Count == 0) {
+                player.Color = ChessmanColor.Red;
+            } else {
+                player.Color = room.Players[0].Color == ChessmanColor.Red ?
+                    ChessmanColor.Black :
+                    ChessmanColor.Red;
+            }
 
             room.Players.Add(player);
 
-            room.ChessBoard.Update();
+            room.Update();
         }
+
+        private void OnRoomChanged() {
+            RoomChanged?.Invoke();
+        }
+
         public void Leave() {
 
             var player = Session.Player;
@@ -118,9 +117,12 @@ namespace Shen.ChineseChess.Server {
 
             room.Players.Remove(player);
 
+            room.Update();
         }
 
         public event Action ChessBoardChanged;
+
+        public event Action RoomChanged;
 
         public Chess GetChessBoard() {
             return roomService.Find((int)Session.Player.Number)?.ChessBoard;
@@ -157,27 +159,26 @@ namespace Shen.ChineseChess.Server {
                 if (room.IsReady) {
 
                     room.ChessBoard.Initialize();
-
-                    //OnRoomChanged(room, (p) => {
-                    //    sessionServive.Find(p.Id).ChessService.OnChessBoardChanged();
-                    //});
-
-                    //OnChessBoardChanged(room);
                 }
             }
-            return room.Players[0] == player ? ChessmanColor.Red : ChessmanColor.Black;
+
+            room.Update();
+
+
+            return player.Color;
+
+            //return room.Players[0] == player ? ChessmanColor.Red : ChessmanColor.Black;
         }
 
-        //void OnRoomChanged(ChessRoom room, Action<ChessPlayer> action) {
-        //    foreach (var player in room.Players) {
-        //        action(player);
-        //    }
-        //}
 
         internal void OnChessBoardChanged() {
             ChessBoardChanged.Invoke();
         }
 
-
+        public ChessRoom GetRoom() {
+            var id = Session.Player.Number;
+            if (id == null) return null;
+            return roomService.Find((int)id);
+        }
     }
 }

@@ -122,11 +122,23 @@ namespace Shen.ChineseChess {
         /// <summary>
         /// 对每个棋子进行操作
         /// </summary>
-        /// <param name="f"></param>
-        public void ForEach(Action<int, int, Chessman> f) {
+        /// <param name="action"></param>
+        public void ForEach(Action<int, int, Chessman> action) {
             for (int j = 0; j < Height; j++) {
                 for (int i = 0; i < Width; i++) {
-                    f(i, j, _grid[i, j]);
+                    action(i, j, _grid[i, j]);
+                }
+            }
+        }
+
+
+        public void ForEach(Func<int, int, Chessman, Boolean> func) {
+            for (int j = 0; j < Height; j++) {
+                for (int i = 0; i < Width; i++) {
+                    bool? result = func(i, j, _grid[i, j]);
+                    if (result == true) {
+                        return;
+                    }
                 }
             }
         }
@@ -365,7 +377,7 @@ namespace Shen.ChineseChess {
 
             foreach (var pao in paos) {
                 if (!p.Equals(pao)) {
-                    if ((IsNull(pao) && CalculateCount(p, pao) == 0) || (CanEat(pao, item) && CalculateCount(p, pao) == 1)) {
+                    if ((IsNull(pao) && GetInterval(p, pao) == 0) || (CanEat(pao, item) && GetInterval(p, pao) == 1)) {
                         points.Add(pao);
                     }
                 }
@@ -425,7 +437,7 @@ namespace Shen.ChineseChess {
 
             foreach (var ju in jus) {
                 if (!ju.Equals(p)) {
-                    if (CanPlace(ju, item) && CalculateCount(p, ju) == 0) points.Add(ju);
+                    if (CanPlace(ju, item) && GetInterval(p, ju) == 0) points.Add(ju);
                 }
             }
         }
@@ -453,7 +465,7 @@ namespace Shen.ChineseChess {
 
             if (item == null) throw new InvalidOperationException("原位置没有棋子可以移动");
 
-            if (item.Color != _who) throw new InvalidOperationException("没有轮到此方行走");
+            //if (item.Color != _who) throw new InvalidOperationException("没有轮到此方行走");
 
             PointCollection points = GetMovePlaces(source);
 
@@ -501,20 +513,105 @@ namespace Shen.ChineseChess {
             OnChessBoardChanged();
         }
 
+
+        /// <summary>
+        /// 指定方是否将死另一方
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
         public bool Checkmate(ChessmanColor color) {
 
-            //TODO 检测将死
+            //没有将军
 
-            return false;
+            //if (!Check(color)) return false;
+
+            bool result = true;
+
+            ForEach((x, y, chessman) => {
+
+                if (chessman != null && chessman.Color != color) {
+
+                    var source = new Point(x, y);
+
+                    Chess chess = new Chess(this);
+
+                    var points = chess.GetMovePlaces(source);
+
+                    foreach (var point in points) {
+
+                        chess.Move(source, point);
+
+                        //尝试走对方每一个子每个步骤，如果存在不被将军，则没将死
+
+                        if (!chess.Check(color)) {
+                            result = false;
+                            return true;
+                        }
+
+                        chess.Undo();
+                    }
+                }
+                return false;
+            });
+
+            return result;
+        }
+
+
+        /// <summary>
+        /// 指定方是否在将军
+        /// </summary>
+        /// <param name="color"></param>
+        /// <returns></returns>
+        public bool Check(ChessmanColor color) {
+
+            var chessmans = _grid.OfType<Chessman>()
+                .Where(x => x != null && x.Color != color);
+
+            //另一方将的位置
+
+            Point p = new Point();
+
+            bool find = false;
+
+            ForEach((x, y, chessman) => {
+                if (chessman != null && chessman.Color != color & chessman.Type == ChessmanType.Jiang) {
+                    p = new Point(x, y);
+                    find = true;
+                    return true;
+                }
+                return false;
+            });
+
+            if (!find) return false;
+
+            bool result = false;
+
+            //检查本方子的可行范围是否包含对方将/帅
+
+            ForEach((x, y, chessman) => {
+
+                if (chessman != null && chessman.Color == color) {
+
+                    var points = GetMovePlaces(new Point(x, y));
+                    if (points.Contains(p)) {
+                        result = true;
+                        return true;
+                    }
+                }
+                return false;
+            });
+
+            return result;
         }
 
         /// <summary>
-        /// 计算两点之间个隔子数量
+        /// 计算两点之间棋子数量
         /// </summary>
         /// <param name="p1"></param>
         /// <param name="p2"></param>
         /// <returns></returns>
-        public int CalculateCount(Point p1, Point p2) {
+        public int GetInterval(Point p1, Point p2) {
             int n = 0;
 
             if (p1.X != p2.X && p1.Y != p2.Y) throw new InvalidOperationException("必须在同一行或同一列");

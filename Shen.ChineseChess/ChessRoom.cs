@@ -40,6 +40,13 @@ namespace Shen.ChineseChess {
         /// </summary>
         public bool IsReady { get { return _players.Count == 2 && _players.All(x => x.IsReady == true); } }
 
+        [field:NonSerialized]
+        public event Action RoomChanged;
+
+        public void Update() {
+            RoomChanged?.Invoke();
+        }
+
         public override string ToString() {
             return String.Format("玩家数量{0},全部准备{1}", _players.Count, IsReady);
         }

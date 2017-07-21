@@ -42,6 +42,7 @@ namespace Shen.ChineseChess
             set { isReady = value; }
         }
 
+        public ChessmanColor Color { get; set; }
         public string Id { get; set; }
     }
 }

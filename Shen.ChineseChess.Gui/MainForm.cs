@@ -35,6 +35,10 @@ namespace Shen.ChineseChess.Gui {
             chessboard.Chess.Move(e.Source, e.Target);
             chessboard.Invalidate();
             chessboard.Color = chess.Who;
+
+            if (chess.Checkmate(chess.Who)) {
+                Console.WriteLine("{0}方被将死", chess.Who);
+            }
         }
     }
 }

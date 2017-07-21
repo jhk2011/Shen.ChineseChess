@@ -22,7 +22,31 @@ namespace Shen.ChineseChess.Client {
 
         private void MainForm_Load(object sender, EventArgs e) {
             client.ChessService.ChessBoardChanged += ChessService_ChessBoardChanged;
+            client.ChessService.RoomChanged += ChessService_RoomChanged;
             client.ChessService.Join(rid);
+        }
+
+        private void ChessService_RoomChanged() {
+
+            var room = client.ChessService.GetRoom();
+
+            foreach (var player in room.Players) {
+
+                if (player.Color == ChessmanColor.Red) {
+                    lblRed.Text = GetName(room, player);
+                }
+                if (player.Color == ChessmanColor.Black) {
+                    lblBlackName.Text = GetName(room, player);
+                }
+            }
+        }
+
+        private string GetName(ChessRoom room, ChessPlayer player) {
+            if (player.IsReady && !room.IsReady) {
+                return player.Name + "(已准备)";
+            } else {
+                return player.Name;
+            }
         }
 
         private void ChessService_ChessBoardChanged() {
@@ -33,8 +57,13 @@ namespace Shen.ChineseChess.Client {
 
                 chessboard.Chess = board;
 
-                picTurn.Image = board.Who
-                    == ChessmanColor.Black ? Resource.b_j : Resource.r_j;
+                if (board.Who == ChessmanColor.Red) {
+                    picRed.BackgroundImage = Resource.r_box;
+                    picBlack.BackgroundImage = null;
+                } else {
+                    picBlack.BackgroundImage = Resource.b_box;
+                    picRed.BackgroundImage = null;
+                }
             }
         }
 

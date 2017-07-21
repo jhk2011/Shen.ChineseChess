@@ -37,9 +37,9 @@
             // 
             // txtName
             // 
-            this.txtName.Location = new System.Drawing.Point(113, 14);
+            this.txtName.Location = new System.Drawing.Point(82, 14);
             this.txtName.Name = "txtName";
-            this.txtName.Size = new System.Drawing.Size(160, 21);
+            this.txtName.Size = new System.Drawing.Size(119, 21);
             this.txtName.TabIndex = 1;
             // 
             // lstRooms
@@ -48,12 +48,12 @@
             this.lstRooms.ItemHeight = 12;
             this.lstRooms.Location = new System.Drawing.Point(32, 46);
             this.lstRooms.Name = "lstRooms";
-            this.lstRooms.Size = new System.Drawing.Size(241, 280);
+            this.lstRooms.Size = new System.Drawing.Size(250, 280);
             this.lstRooms.TabIndex = 3;
             // 
             // btnConnect
             // 
-            this.btnConnect.Location = new System.Drawing.Point(279, 12);
+            this.btnConnect.Location = new System.Drawing.Point(207, 12);
             this.btnConnect.Name = "btnConnect";
             this.btnConnect.Size = new System.Drawing.Size(75, 23);
             this.btnConnect.TabIndex = 4;
@@ -63,7 +63,7 @@
             // 
             // btnEnter
             // 
-            this.btnEnter.Location = new System.Drawing.Point(279, 46);
+            this.btnEnter.Location = new System.Drawing.Point(288, 46);
             this.btnEnter.Name = "btnEnter";
             this.btnEnter.Size = new System.Drawing.Size(75, 23);
             this.btnEnter.TabIndex = 5;
@@ -84,7 +84,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(783, 347);
+            this.ClientSize = new System.Drawing.Size(383, 347);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.btnEnter);
             this.Controls.Add(this.btnConnect);
