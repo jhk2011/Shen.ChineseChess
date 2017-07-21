@@ -8,34 +8,34 @@ namespace Shen.ChineseChess
 {
     public class ChessHistory
     {
-        List<ChessBoard> _undos = new List<ChessBoard>();
-        List<ChessBoard> _redos = new List<ChessBoard>();
+        List<Chess> _undos = new List<Chess>();
+        List<Chess> _redos = new List<Chess>();
 
-        public void Add(ChessBoard board)
+        public void Add(Chess board)
         {
-            _undos.Add(new ChessBoard(board));
+            _undos.Add(new Chess(board));
         }
 
-        public ChessBoard Undo()
+        public Chess Undo()
         {
             if (_undos.Count > 0)
             {
                 int index = _undos.Count - 1;
-                ChessBoard board = _undos[index];
+                Chess board = _undos[index];
                 _undos.RemoveAt(index);
                 _redos.Add(board);
-                return new ChessBoard(board); ;
+                return new Chess(board); ;
             }
             return null;
         }
 
-        public ChessBoard Redo() {
+        public Chess Redo() {
             if (_redos.Count > 0) {
                 int index = _redos.Count - 1;
-                ChessBoard board = _redos[index];
+                Chess board = _redos[index];
                 _redos.RemoveAt(index);
                 _undos.Add(board);
-                return new ChessBoard(board);
+                return new Chess(board);
             }
             return null;
         }

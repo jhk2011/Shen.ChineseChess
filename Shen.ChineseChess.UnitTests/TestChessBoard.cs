@@ -7,7 +7,7 @@ namespace Shen.ChineseChess.UnitTests {
 
         [TestMethod]
         public void TestBing() {
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
 
             board.Grid[4, 3] = new Chessman(ChessmanType.Bing, ChessmanColor.Red);
 
@@ -32,7 +32,7 @@ namespace Shen.ChineseChess.UnitTests {
 
         [TestMethod]
         public void TestGezi() {
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
             board.Initialize();
             int n = board.CalculateCount(new Point(0, 0), new Point(8, 0));
             Assert.AreEqual(n, 7);
@@ -48,7 +48,7 @@ namespace Shen.ChineseChess.UnitTests {
 
         [TestMethod]
         public void TestJu() {
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
             board.Grid[4, 3] = new Chessman(ChessmanType.Ju, ChessmanColor.Red);
             var p = board.GetMovePlaces(new Point(4, 3));
             //毫无阻挡的情况下应为17个可放位置
@@ -67,7 +67,7 @@ namespace Shen.ChineseChess.UnitTests {
 
         [TestMethod]
         public void TestMa() {
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
             board.Grid[4, 3] = new Chessman(ChessmanType.Ma, ChessmanColor.Red);
             var p = board.GetMovePlaces(new Point(4, 3));
             Assert.AreEqual(p.Count, 8);
@@ -82,7 +82,7 @@ namespace Shen.ChineseChess.UnitTests {
 
         [TestMethod]
         public void TestPao() {
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
             board.Grid[4, 3] = new Chessman(ChessmanType.Pao, ChessmanColor.Red);
             var p = board.GetMovePlaces(new Point(4, 3));
             Assert.AreEqual(p.Count, 17);
@@ -98,7 +98,7 @@ namespace Shen.ChineseChess.UnitTests {
 
         [TestMethod]
         public void TestJiang() {
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
             board.Grid[4, 0] = new Chessman(ChessmanType.Jiang, ChessmanColor.Red);
 
             var p = board.GetMovePlaces(new Point(4, 0));
@@ -106,7 +106,7 @@ namespace Shen.ChineseChess.UnitTests {
             Assert.AreEqual(p.Count, 3);
 
 
-            board = new ChessBoard();
+            board = new Chess();
             board.Grid[3, 0] = new Chessman(ChessmanType.Jiang, ChessmanColor.Red);
 
             p = board.GetMovePlaces(new Point(3, 0));
@@ -114,7 +114,7 @@ namespace Shen.ChineseChess.UnitTests {
             Assert.AreEqual(p.Count, 2);
 
 
-            board = new ChessBoard();
+            board = new Chess();
             board.Grid[4, 1] = new Chessman(ChessmanType.Jiang, ChessmanColor.Red);
             board.Grid[4, 9] = new Chessman(ChessmanType.Jiang, ChessmanColor.Black);
 
@@ -122,7 +122,7 @@ namespace Shen.ChineseChess.UnitTests {
 
             Assert.AreEqual(p.Count,5);
 
-            board = new ChessBoard();
+            board = new Chess();
             board.Grid[4, 1] = new Chessman(ChessmanType.Jiang, ChessmanColor.Red);
 
             board.Grid[4, 5] = new Chessman(ChessmanType.Pao, ChessmanColor.Red);
@@ -134,7 +134,7 @@ namespace Shen.ChineseChess.UnitTests {
             Assert.AreEqual(p.Count, 4);
 
 
-            board = new ChessBoard();
+            board = new Chess();
 
             board.Initialize();
             board.Grid[4, 3] = null;
@@ -148,7 +148,7 @@ namespace Shen.ChineseChess.UnitTests {
 
         [TestMethod]
         public void TestShi() {
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
             board.Grid[3, 0] = new Chessman(ChessmanType.Shi, ChessmanColor.Red);
 
             var p = board.GetMovePlaces(new Point(3, 0));
@@ -156,7 +156,7 @@ namespace Shen.ChineseChess.UnitTests {
             Assert.AreEqual(p.Count, 1);
 
 
-            board = new ChessBoard();
+            board = new Chess();
             board.Grid[4, 1] = new Chessman(ChessmanType.Shi, ChessmanColor.Red);
 
             p = board.GetMovePlaces(new Point(4, 1));
@@ -167,12 +167,12 @@ namespace Shen.ChineseChess.UnitTests {
 
         [TestMethod]
         public void TestXiang() {
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
             board.Grid[2, 0] = new Chessman(ChessmanType.Xiang, ChessmanColor.Red);
             var p = board.GetMovePlaces(new Point(2, 0));
             Assert.AreEqual(p.Count, 2);
 
-            board = new ChessBoard();
+            board = new Chess();
             board.Grid[4, 2] = new Chessman(ChessmanType.Xiang, ChessmanColor.Red);
             p = board.GetMovePlaces(new Point(4, 2));
             Assert.AreEqual(p.Count, 4);

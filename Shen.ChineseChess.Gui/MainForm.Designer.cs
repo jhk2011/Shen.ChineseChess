@@ -28,22 +28,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.picBoard = new System.Windows.Forms.PictureBox();
             this.btnUndo = new System.Windows.Forms.Button();
             this.btnRedo = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.picBoard)).BeginInit();
+            this.chessboard = new Shen.ChineseChess.Gui.Chessboard();
             this.SuspendLayout();
-            // 
-            // picBoard
-            // 
-            this.picBoard.BackColor = System.Drawing.Color.Transparent;
-            this.picBoard.Location = new System.Drawing.Point(12, 12);
-            this.picBoard.Name = "picBoard";
-            this.picBoard.Size = new System.Drawing.Size(325, 402);
-            this.picBoard.TabIndex = 0;
-            this.picBoard.TabStop = false;
-            this.picBoard.Paint += new System.Windows.Forms.PaintEventHandler(this.picBoard_Paint);
-            this.picBoard.MouseDown += new System.Windows.Forms.MouseEventHandler(this.picBoard_MouseDown);
             // 
             // btnUndo
             // 
@@ -65,28 +53,38 @@
             this.btnRedo.UseVisualStyleBackColor = true;
             this.btnRedo.Click += new System.EventHandler(this.btnRedo_Click);
             // 
+            // chessboard
+            // 
+            this.chessboard.BackColor = System.Drawing.Color.Transparent;
+            this.chessboard.Chess = null;
+            this.chessboard.Color = Shen.ChineseChess.ChessmanColor.Red;
+            this.chessboard.Location = new System.Drawing.Point(13, 12);
+            this.chessboard.Name = "chessboard";
+            this.chessboard.Size = new System.Drawing.Size(336, 402);
+            this.chessboard.TabIndex = 3;
+            this.chessboard.Text = "chessboard";
+            this.chessboard.Moved += this.chessboard1_Moved;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Shen.ChineseChess.Gui.Resource.bg;
             this.ClientSize = new System.Drawing.Size(448, 426);
+            this.Controls.Add(this.chessboard);
             this.Controls.Add(this.btnRedo);
             this.Controls.Add(this.btnUndo);
-            this.Controls.Add(this.picBoard);
             this.Name = "MainForm";
             this.Text = "中国象棋";
             this.Load += new System.EventHandler(this.MainForm_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.picBoard)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox picBoard;
         private System.Windows.Forms.Button btnUndo;
         private System.Windows.Forms.Button btnRedo;
+        private Chessboard chessboard;
     }
 }
 

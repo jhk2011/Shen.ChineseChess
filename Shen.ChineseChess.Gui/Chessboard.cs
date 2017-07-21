@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Shen.ChineseChess.Client {
+namespace Shen.ChineseChess.Gui {
 
     public class ChessboardMovedEventArgs : EventArgs {
 
@@ -112,10 +112,7 @@ namespace Shen.ChineseChess.Client {
 
             Point p = VisualPointToChessPoint(new Point(e.X, e.Y), new Point(19, 19));
 
-            if (point.Equals(p)) {
-                Invalidate();
-                return;
-            }
+            if (point.Equals(p)) return;
 
             if (selected && points.Any(item => item.Equals(p))) {
 
@@ -168,8 +165,8 @@ namespace Shen.ChineseChess.Client {
         public void DrawChessBoard(Chess board, Graphics g) {
 
             if (image != null) {
-                bool flag = image == Resource.Board;
-                Console.WriteLine("一致", flag);
+                bool flag = image== Resource.Board;
+                Console.WriteLine("一致",flag);
             }
 
             image = Resource.Board;

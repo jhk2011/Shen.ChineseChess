@@ -40,8 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ChessBoard.cs" />
-    <Compile Include="ChessBoardCollection.cs" />
+    <Compile Include="Chess.cs" />
+    <Compile Include="ChessCollection.cs" />
     <Compile Include="ChessHistory.cs" />
     <Compile Include="Chessman.cs" />
     <Compile Include="ChessmanColor.cs" />

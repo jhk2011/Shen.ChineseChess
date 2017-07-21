@@ -10,7 +10,7 @@ namespace Shen.ChineseChess
     /// <summary>
     /// 棋盘集合
     /// </summary>
-    public class ChessBoardCollection:Collection<ChessBoard>
+    public class ChessCollection:Collection<Chess>
     {
 
     }

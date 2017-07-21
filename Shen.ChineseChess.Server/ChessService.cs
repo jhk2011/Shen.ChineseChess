@@ -122,7 +122,7 @@ namespace Shen.ChineseChess.Server {
 
         public event Action ChessBoardChanged;
 
-        public ChessBoard GetChessBoard() {
+        public Chess GetChessBoard() {
             return roomService.Find((int)Session.Player.Number)?.ChessBoard;
         }
 
@@ -165,7 +165,7 @@ namespace Shen.ChineseChess.Server {
                     //OnChessBoardChanged(room);
                 }
             }
-            return room.Players[0] == player ? ChessmanColor.Black : ChessmanColor.Red;
+            return room.Players[0] == player ? ChessmanColor.Red : ChessmanColor.Black;
         }
 
         //void OnRoomChanged(ChessRoom room, Action<ChessPlayer> action) {

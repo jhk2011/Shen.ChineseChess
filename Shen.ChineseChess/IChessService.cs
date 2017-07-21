@@ -26,7 +26,7 @@ namespace Shen.ChineseChess {
         void Leave();
 
         ChessmanColor Ready();
-        ChessBoard GetChessBoard();
+        Chess GetChessBoard();
 
         event Action ChessBoardChanged;
         void Move(Point point, Point dest);

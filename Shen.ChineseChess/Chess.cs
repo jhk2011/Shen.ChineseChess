@@ -9,7 +9,7 @@ namespace Shen.ChineseChess {
     /// 棋盘
     /// </summary>
     [Serializable]
-    public partial class ChessBoard {
+    public partial class Chess {
         public const int Width = 9;
         public const int Height = 10;
 
@@ -26,11 +26,11 @@ namespace Shen.ChineseChess {
         [NonSerialized]
         private ChessHistory _history = new ChessHistory();
 
-        public ChessBoard() {
+        public Chess() {
 
         }
 
-        public ChessBoard(ChessBoard board) {
+        public Chess(Chess board) {
             this._grid = (Chessman[,])board._grid.Clone();
             this._who = board._who;
         }
@@ -435,12 +435,20 @@ namespace Shen.ChineseChess {
             return _grid[p.X, p.Y];
         }
 
+        public bool Moved { get; set; }
+
+        public ChessmanColor Color { get; set; }
+        public Point Source { get; set; }
+
+        public Point Target { get; set; }
+
         /// <summary>
         /// 移动一颗棋子
         /// </summary>
         /// <param name="source"></param>
         /// <param name="target"></param>
         public void Move(Point source, Point target) {
+
             var item = GetChess(source);
 
             if (item == null) throw new InvalidOperationException("原位置没有棋子可以移动");
@@ -453,8 +461,12 @@ namespace Shen.ChineseChess {
                 throw new InvalidOperationException("目标位置非法");
             }
 
-            _history.Add(this);
+            Moved = true;
+            Color = item.Color;
+            Source = source;
+            Target = target;
 
+            _history.Add(this);
 
             _grid[target.X, target.Y] = item;
 
@@ -463,7 +475,6 @@ namespace Shen.ChineseChess {
             OnChessBoardChanged();
 
             Turn();
-
 
         }
 
@@ -474,7 +485,7 @@ namespace Shen.ChineseChess {
             _who = _who == ChessmanColor.Red ? ChessmanColor.Black : ChessmanColor.Red;
         }
 
-        private void Assign(ChessBoard board) {
+        private void Assign(Chess board) {
             if (board == null) return;
             this._grid = board._grid;
             this._who = board._who;

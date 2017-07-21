@@ -13,12 +13,12 @@ namespace Shen.ChineseChess {
         public int Id { get; set; }
 
         [NonSerialized]
-        private ChessBoard _chessBoard = new ChessBoard();
+        private Chess _chessBoard = new Chess();
 
         /// <summary>
         /// 此房间的棋盘
         /// </summary>
-        public ChessBoard ChessBoard
+        public Chess ChessBoard
         {
             get { return _chessBoard; }
             set { _chessBoard = value; }

@@ -12,7 +12,7 @@ namespace Shen.ChineseChess.TestConsole
         {
             long m1 = GC.GetTotalMemory(true);
 
-            ChessBoard board = new ChessBoard();
+            Chess board = new Chess();
             board.Initialize();
 
             long m2 = GC.GetTotalMemory(true);
