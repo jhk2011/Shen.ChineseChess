@@ -8,74 +8,86 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-
 namespace Shen.ChineseChess.Client {
-    public partial class MainForm : Form {
 
-        bool _showHint = false;
+    public class ChessboardMovedEventArgs : EventArgs {
 
-        PointCollection _points;
-        public ChessBoard _board;
-        public bool _turn = false;
-        public ChessmanColor _color;
+        public ChessboardMovedEventArgs(Point source, Point target) {
+            Source = source;
+            Target = target;
+        }
 
-        public int rid;
+        public Point Source { get; private set; }
 
-        public ChessClient client;
+        public Point Target { get; private set; }
+    }
+
+    public class ChessboardSelectedEventArgs : EventArgs {
+        public ChessboardSelectedEventArgs(Point point) {
+            Point = point;
+        }
+
+        public Point Point { get; private set; }
+    }
 
 
+    public delegate void ChessboardMovedEventHandler(object sender, ChessboardMovedEventArgs e);
+    public class Chessboard : Control {
+
+
+        bool selected = false;
+
+        PointCollection points;
+
+        ChessBoard board;
         public ChessBoard Board
         {
-            get { return _board; }
-            set { _board = value; }
-        }
-
-        Point _point;
-
-        public MainForm() {
-            InitializeComponent();
-            var board = new ChessBoard();
-            board.Initialize();
-            chessboard1.Board = board;
-        }
-
-        private void MainForm_Load(object sender, EventArgs e) {
-            client.ChessService.ChessBoardChanged += ChessService_ChessBoardChanged;
-            client.ChessService.Join(rid);
-        }
-
-        private void ChessService_ChessBoardChanged() {
-
-            _board = client.ChessService.GetChessBoard();
-
-            if (_board != null) {
-
-                _turn = _board.Who == _color;
-
-                pictureBox1.Image = _board.Who
-                    == ChessmanColor.Black
-                    ? Resource.b_j : Resource.r_j;
-
-                picBoard.Invalidate();
+            get
+            {
+                return board;
+            }
+            set
+            {
+                board = value;
+                Invalidate();
             }
         }
 
-        private void btnReady_Click(object sender, EventArgs e) {
-            _color = client.ChessService.Ready();
+
+        ChessmanColor color;
+
+        public ChessmanColor Color
+        {
+            get
+            {
+                return color;
+            }
+
+            set
+            {
+                color = value;
+            }
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e) {
-            client.ChessService.Leave();
+        Point point;
+
+        public Point Point
+        {
+            get
+            {
+                return point;
+            }
         }
+
 
         #region 点的转换
 
-        public static Point LogicPointToVisualPoint(Point p, Point offset) {
+        public static Point ChessPointToVisualPoint(Point p, Point offset) {
             Point p2 = new Point(p.X, ChessBoard.Height - p.Y - 1);
             return p2.Scale(35, 36).Offset(24, 38).Offset(offset);
         }
 
-        public static Point VisualPointToLogicPoint(Point p, Point offset) {
+        public static Point VisualPointToChessPoint(Point p, Point offset) {
             Point p2 = p.Offset(-24, -38)
                 .Offset(offset)
                 .Scale(1.0 / 35.0, 1.0 / 36.0);
@@ -88,6 +100,8 @@ namespace Shen.ChineseChess.Client {
         public void DrawChessBoard(ChessBoard board, Graphics g) {
 
             g.DrawImage(Resource.Board, 0, 0, 325, 402);
+
+            if (board == null) return;
 
             board.ForEach((x, y, item) => {
 
@@ -155,7 +169,7 @@ namespace Shen.ChineseChess.Client {
                     }
                     #endregion
 
-                    Point p = LogicPointToVisualPoint(new Point(x, y), new Point(-19, -19));
+                    Point p = ChessPointToVisualPoint(new Point(x, y), new Point(-19, -19));
 
                     //MessageBox.Show(p.ToString());
 
@@ -164,20 +178,20 @@ namespace Shen.ChineseChess.Client {
                 }
             });
 
-            if (_showHint) {
-                foreach (var item in _points) {
+            if (selected) {
+                foreach (var item in points) {
                     Image image2 = Resource.dot;
-                    Point p2 = LogicPointToVisualPoint(new Point(item.X, item.Y), new Point(-9, -8));
+                    Point p2 = ChessPointToVisualPoint(new Point(item.X, item.Y), new Point(-9, -8));
                     g.DrawImage(image2, p2.X, p2.Y, 13, 11);
                 }
 
-                Point p = LogicPointToVisualPoint(_point, new Point(-19, -19));
+                Point p = ChessPointToVisualPoint(Point, new Point(-19, -19));
 
-                Chessman cItem = board.Grid[_point.X, _point.Y];
+                Chessman chessman = board.Grid[Point.X, Point.Y];
 
                 Image image = Resource.b_box;
 
-                if (cItem.Color == ChessmanColor.Red) {
+                if (chessman.Color == ChessmanColor.Red) {
                     image = Resource.r_box;
                 }
 
@@ -188,70 +202,87 @@ namespace Shen.ChineseChess.Client {
 
         #endregion
 
-        private void imgBoard_MouseDown(object sender, MouseEventArgs e) {
-            if (!_turn) return;
+        protected new virtual void Paint() {
+            this.Invalidate();
+        }
 
-            if (e.Button == MouseButtons.Left) {
+        public event EventHandler<ChessboardSelectedEventArgs> Selected;
 
-                Point p = VisualPointToLogicPoint(new Point(e.X, e.Y), new Point(19, 19));
+        public event ChessboardMovedEventHandler Moved;
 
-                if (!_showHint) {
-                    if (_board.IsValid(p) && !_board.IsNull(p) && _board.HasColor(p, _color)) {
-                        _points = _board.GetMovePlaces(p);
-                        _point = p;
-                        _showHint = _points.Count > 0;
-                        picBoard.Invalidate();
-                    }
-                } else {
-                    if (_point.Equals(p)) {
-                        //_showHint = false;
-                        //picBoard.Invalidate();
-                        return;
-                    }
+        protected virtual void OnMoved(ChessboardMovedEventArgs e) {
+            Moved?.Invoke(this, e);
+        }
 
-                    if (_points.Any(item => item.Equals(p))) {
+        protected virtual void OnSelected(ChessboardSelectedEventArgs e) {
+            Selected?.Invoke(this, e);
+        }
 
-                        // _board.Move(_point, p);
+        protected override void OnMouseDown(MouseEventArgs e) {
 
-                        client.ChessService.Move(_point, p);
+            if (e.Button != MouseButtons.Left) return;
 
-                        _showHint = false;
-                        picBoard.Invalidate();
-                        return;
-                    }
+            if (board == null || board.Who != Color) return;
 
-                    if (_board.IsValid(p) && !_board.IsNull(p) && _board.HasColor(p, _color)) {
-                        _points = _board.GetMovePlaces(p);
-                        _point = p;
-                        _showHint = _points.Count > 0;
-                        picBoard.Invalidate();
-                    } else {
-                        //_showHint = false;
-                        //picBoard.Invalidate();
-                    }
+            Point p = VisualPointToChessPoint(new Point(e.X, e.Y), new Point(19, 19));
 
+            if (point.Equals(p)) {
+                OnSelected(new ChessboardSelectedEventArgs(point));
+                return;
+            }
+
+            if (selected && points.Any(item => item.Equals(p))) {
+
+                board.Move(point, p);
+
+                OnMoved(new ChessboardMovedEventArgs(point, p));
+
+                selected = false;
+
+                Paint();
+
+            } else {
+
+                if (board.IsValid(p) && !board.IsNull(p) && board.HasColor(p, Color)) {
+
+                    points = board.GetMovePlaces(p);
+
+                    selected = true;
+                    point = p;
+
+                    Paint();
                 }
-
             }
         }
 
-        private void picBoard_Paint(object sender, PaintEventArgs e) {
-            if (_board != null) {
-                DrawChessBoard(_board, e.Graphics);
+        public Chessboard() {
+
+            foreach (var style in typeof(ControlStyles).GetEnumValues()) {
+                Console.WriteLine("{0}={1}", typeof(ControlStyles)
+                    .GetEnumName(style),
+                    GetStyle((ControlStyles)style));
             }
+           
+
+            SetStyle(ControlStyles.SupportsTransparentBackColor
+                  | ControlStyles.UserPaint
+                  | ControlStyles.AllPaintingInWmPaint
+                  | ControlStyles.OptimizedDoubleBuffer
+                  , true);
         }
 
-        private void timer1_Tick(object sender, EventArgs e) {
+        //protected override CreateParams CreateParams
+        //{
+        //    get
+        //    {
+        //        CreateParams cp = base.CreateParams;
+        //       cp.ExStyle |= 0x00000020; //WS_EX_TRANSPARENT 
+        //        return cp;
+        //    }
+        //}
 
-        }
-
-        private void picBoard_Click(object sender, EventArgs e) {
-
-        }
-
-        private void chessboard1_Moved(object sender, ChessboardMovedEventArgs e) {
-            //chessboard1.Board.Move(e.Source, e.Target);
-            chessboard1.Color = chessboard1.Board.Who;
+        protected override void OnPaint(PaintEventArgs e) {
+            DrawChessBoard(board, e.Graphics);
         }
     }
 }

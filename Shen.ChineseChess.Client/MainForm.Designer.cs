@@ -33,6 +33,7 @@
             this.picBoard = new System.Windows.Forms.PictureBox();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.chessboard1 = new Shen.ChineseChess.Client.Chessboard();
             ((System.ComponentModel.ISupportInitialize)(this.picBoard)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -68,11 +69,23 @@
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Location = new System.Drawing.Point(411, 59);
+            this.pictureBox1.Location = new System.Drawing.Point(411, 66);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(75, 68);
             this.pictureBox1.TabIndex = 2;
             this.pictureBox1.TabStop = false;
+            // 
+            // chessboard1
+            // 
+            this.chessboard1.BackColor = System.Drawing.Color.Transparent;
+            this.chessboard1.Board = null;
+            this.chessboard1.Color = Shen.ChineseChess.ChessmanColor.Red;
+            this.chessboard1.Location = new System.Drawing.Point(108, 7);
+            this.chessboard1.Name = "chessboard1";
+            this.chessboard1.Size = new System.Drawing.Size(355, 414);
+            this.chessboard1.TabIndex = 3;
+            this.chessboard1.Text = "chessboard1";
+            this.chessboard1.Moved += new Shen.ChineseChess.Client.ChessboardMovedEventHandler(this.chessboard1_Moved);
             // 
             // MainForm
             // 
@@ -80,6 +93,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImage = global::Shen.ChineseChess.Client.Resource.bg;
             this.ClientSize = new System.Drawing.Size(518, 433);
+            this.Controls.Add(this.chessboard1);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.picBoard);
             this.Controls.Add(this.btnReady);
@@ -99,5 +113,6 @@
         private System.Windows.Forms.PictureBox picBoard;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private Chessboard chessboard1;
     }
 }

@@ -438,27 +438,27 @@ namespace Shen.ChineseChess {
         /// <summary>
         /// 移动一颗棋子
         /// </summary>
-        /// <param name="p1"></param>
-        /// <param name="p2"></param>
-        public void Move(Point p1, Point p2) {
-            var item = GetChess(p1);
+        /// <param name="source"></param>
+        /// <param name="target"></param>
+        public void Move(Point source, Point target) {
+            var item = GetChess(source);
 
             if (item == null) throw new InvalidOperationException("原位置没有棋子可以移动");
 
             if (item.Color != _who) throw new InvalidOperationException("没有轮到此方行走");
 
-            PointCollection points = GetMovePlaces(p1);
+            PointCollection points = GetMovePlaces(source);
 
-            if (!points.Any(x => x.Equals(p2))) {
+            if (!points.Any(x => x.Equals(target))) {
                 throw new InvalidOperationException("目标位置非法");
             }
 
             _history.Add(this);
 
 
-            _grid[p2.X, p2.Y] = item;
+            _grid[target.X, target.Y] = item;
 
-            _grid[p1.X, p1.Y] = null;
+            _grid[source.X, source.Y] = null;
 
             OnChessBoardChanged();
 
@@ -488,6 +488,13 @@ namespace Shen.ChineseChess {
         public void Redo() {
             Assign(_history.Redo());
             OnChessBoardChanged();
+        }
+
+        public bool Checkmate(ChessmanColor color) {
+
+            //TODO 检测将死
+
+            return false;
         }
 
         /// <summary>
